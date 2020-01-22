@@ -1,0 +1,73 @@
+set system services ssh
+set system services telnet
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set chassis fpc 0 pic 0 interface-type ge
+set chassis fpc 0 lite-mode
+set interfaces ge-0/0/0 unit 0 description to-calico
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.50.11/16
+set interfaces ge-0/0/1 unit 0 description to-metallb
+set interfaces ge-0/0/1 unit 0 family inet address 10.0.50.12/16
+set interfaces ge-0/0/2 unit 0 description to-TEST-SEGMENT
+set interfaces ge-0/0/2 unit 0 family inet address 172.18.0.1/24
+set interfaces fxp0 unit 0 family inet address 192.168.50.11/16
+set policy-options prefix-list LOCAL 172.18.0.0/24
+set policy-options policy-statement TEST-SEG term 1 from prefix-list LOCAL
+set policy-options policy-statement TEST-SEG term 1 then community add calico
+set policy-options policy-statement TEST-SEG term 1 then accept
+set policy-options policy-statement TEST-SEG term 2 then reject
+set policy-options policy-statement calico-in term 1 from community calico
+set policy-options policy-statement calico-in term 1 then accept
+set policy-options policy-statement calico-in term 2 then reject
+set policy-options policy-statement metallb-in term 1 from community metallb
+set policy-options policy-statement metallb-in term 1 then accept
+set policy-options policy-statement metallb-in term 2 then reject
+set policy-options community calico members target:64512:1
+set policy-options community metallb members target:64512:2
+set routing-instances calico routing-options auto-export
+set routing-instances calico protocols bgp group calico type external
+set routing-instances calico protocols bgp group calico local-as 64512
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.101 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.101 peer-as 64513
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.102 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.102 peer-as 64513
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.103 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.103 peer-as 64513
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.201 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.201 peer-as 64513
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.202 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.202 peer-as 64513
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.203 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.203 peer-as 64513
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.204 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.50.204 peer-as 64513
+set routing-instances calico protocols bgp export TEST-SEG
+set routing-instances calico instance-type vrf
+set routing-instances calico interface ge-0/0/0.0
+set routing-instances calico interface ge-0/0/2.0
+set routing-instances calico route-distinguisher 64512:1
+set routing-instances calico vrf-import metallb-in
+set routing-instances calico vrf-target target:64512:1
+set routing-instances metallb routing-options auto-export
+set routing-instances metallb protocols bgp group metallb type external
+set routing-instances metallb protocols bgp group metallb local-as 64512
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.101 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.101 peer-as 64514
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.102 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.102 peer-as 64514
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.103 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.103 peer-as 64514
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.201 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.201 peer-as 64514
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.202 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.202 peer-as 64514
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.203 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.203 peer-as 64514
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.204 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.50.204 peer-as 64514
+set routing-instances metallb instance-type vrf
+set routing-instances metallb interface ge-0/0/1.0
+set routing-instances metallb route-distinguisher 64512:2
+set routing-instances metallb vrf-target target:64512:2

@@ -1,0 +1,9 @@
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  createTimestamp: null
+  name: bgppeer-vmx 
+spec:
+  # asNumber is the remote ASN
+  asNumber: 64512
+  peerIP: 10.0.50.11 
