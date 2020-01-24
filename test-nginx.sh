@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# ./test-nginx.sh <iteration of cURL>
 ITE=$1
 USER=root
 HOST=master1-ha
