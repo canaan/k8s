@@ -1,5 +1,6 @@
 #!/bin/sh
 
+ITE=$1
 USER=root
 HOST=master1-ha
 ssh $USER@$HOST kubectl get svc -o jsonpath='{.items[*].status.loadBalancer.ingress[0].ip}' > external_ip
@@ -10,7 +11,8 @@ ssh $USER@$HOST kubectl get svc -o jsonpath='{.items[*].status.loadBalancer.ingr
 for i in `cat ./external_ip`
 do
 	echo "The external ip for LoadBalancer ip is "$i
-	for j in `seq 10`
+	for j in `seq $ITE` 
+	#for j in `seq 10`
 	do
 		curl -s $i
 	        sleep 1
