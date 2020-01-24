@@ -1,6 +1,8 @@
 #!/bin/sh
 
-ssh root@master1-ha kubectl get svc -o jsonpath='{.items[*].status.loadBalancer.ingress[0].ip}' > external_ip
+USER=root
+HOST=master1-ha
+ssh $USER@$HOST kubectl get svc -o jsonpath='{.items[*].status.loadBalancer.ingress[0].ip}' > external_ip
 
 #echo "The test of the reachability by cURL"
 #echo "The number of external ip is "$#
