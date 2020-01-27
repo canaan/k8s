@@ -7,7 +7,7 @@ HOST=master1-ha
 ssh $USER@$HOST kubectl get svc -o jsonpath='{.items[*].status.loadBalancer.ingress[0].ip}' > external_ip
 
 
-echo "The number of iteration "$ITE
+echo "The iteration times are "$ITE
 
 for i in `cat ./external_ip`
 do
