@@ -21,13 +21,4 @@ do
 done
 
 
-#for i in $*
-#do
-#	echo "The external ip is "$i
-#	for j in `seq 10`
-#	do
-#		curl -s $i
-#		sleep 1
-#	done
-#done
 
