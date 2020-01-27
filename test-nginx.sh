@@ -9,6 +9,8 @@ ssh $USER@$HOST kubectl get svc -o jsonpath='{.items[*].status.loadBalancer.ingr
 #echo "The test of the reachability by cURL"
 #echo "The number of external ip is "$#
 
+echo "The number of iteration "$ITE
+
 for i in `cat ./external_ip`
 do
 	echo "The external ip of LoadBalancer ingress is "$i
