@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+#  generateName: vlan-
+  name: vlan-172.20.1.201
+  labels:
+    app: multus-vlan
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+            { "name": "vlan-conf",
+              "ips": [ "172.20.1.201/24" ]}
+    ]'
+spec:
+  containers:
+  - name: centos-tools
+    image: docker.io/centos/tools:latest
+    command:
+    - /sbin/init
+    securityContext:
+      privileged: true

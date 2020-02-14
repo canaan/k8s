@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  generateName: unmultus-
+  labels:
+    app: unmultus
+spec:
+  containers:
+  - name: centos-tools
+    image: docker.io/centos/tools:latest
+    command:
+    - /sbin/init
+    securityContext:
+      privileged: true
