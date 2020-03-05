@@ -3,14 +3,14 @@ apiVersion: v1
 kind: Pod
 metadata:
 #  generateName: macvlan-
-  name: macvlan-10.1.1.201
+  name: macvlan-172.21.1.201
   labels:
     app: multus-macvlan
   annotations:
     k8s.v1.cni.cncf.io/networks: '[
             {
               "name": "macvlan-conf",
-              "ips": [ "10.1.1.201/24" ]
+              "ips": [ "172.21.1.201/24" ]
             }
     ]'
 spec:

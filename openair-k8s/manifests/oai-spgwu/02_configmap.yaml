@@ -9,5 +9,5 @@ data:
   net_ue_ip: 192.168.20.0/24
   pgwc_sx_ip: 172.16.1.100
   #pgwc_sx_ip: 192.168.2.100
-  pgwu_sgi_gw : 192.168.2.101
+  pgwu_sgi_gw : 172.16.1.1
   #pgwu_sgi_gw : 192.168.3.101

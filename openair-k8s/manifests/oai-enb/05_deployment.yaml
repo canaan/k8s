@@ -129,6 +129,17 @@ spec:
         command:
           - /bin/sleep
           - infinity
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/worker
+              #- key: kubernetes.io/hostname
+                operator: In
+                values:
+                - worker-rt
+                #- worker-rt1
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
