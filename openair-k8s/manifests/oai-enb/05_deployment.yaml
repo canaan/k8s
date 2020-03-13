@@ -18,14 +18,33 @@ spec:
       annotations:
         k8s.v1.cni.cncf.io/networks: enb-net1, enb-net2, enb-net3
     spec:
+#      initContainers:
+#      - name: init-sysctl
+#        image: busybox:1.28 
+#        securityContext:
+#          privileged: true
+#        command: ['sh', '-c', 'sysctl -w net.core.rmem_default=212992; sysctl -w net.core.rmem_max=212992']
       securityContext:
         runAsUser: 0
         runAsGroup: 0
+        privileged: true
+        sysctls:
+#        - name: net.core.rmem_max
+#          value: "212992"
+#        - name: net.core.wmem_max
+#          value: "212992"
       containers:
       - name: enb
         image: quay.io/canaan/oai-enb:1.1.1.el8
         #image: image-registry.openshift-image-registry.svc:5000/oai/oai-enb
         #command: ['sh', '-c', 'sleep 6000']
+        resources:
+          limits:
+            cpu: 6 
+            memory: 16000Mi
+          requests:
+            cpu: 6 
+            memory: 16000Mi
         imagePullPolicy: Always
         securityContext:
           privileged: true

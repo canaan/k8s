@@ -93,6 +93,28 @@ spec:
         volumeMounts:
         - mountPath: /root
           name: db
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: node-role.kubernetes.io/worker
+                #- key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - worker
+                #- worker-rt1
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/worker
+              #- key: kubernetes.io/hostname
+                operator: In
+                values:
+                - worker
+                #- worker-rt1
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
