@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ipvlan-1
+  namespace: default
+  labels:
+    app: multus-ipvlan
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+    {
+      "name": "network-ipvlan",
+      "ips": [ "10.0.201.27/24" ]
+    }
+    ]'
+spec:
+  containers:
+  - name: centos-tools
+    image: docker.io/centos/tools:latest
+    command:
+    - /sbin/init
+    securityContext:
+      privileged: true
+  nodeSelector:
+    kubernetes.io/hostname: worker-0 

@@ -1,0 +1,25 @@
+oc patch networks.operator.openshift.io cluster --type json -p '
+[{
+   "op": "add",
+   "path": "/spec/additionalNetworks",
+   "value": []
+ },{
+   "op": "add",
+   "path": "/spec/additionalNetworks/0",
+   "value": {
+     name: "network-ipvlan",
+     type: "Raw",
+     rawCNIConfig: "{
+       \"cniVersion\": \"0.3.1\",
+       \"type\": \"ipvlan\",
+       \"mode\": \"l2\",
+       \"capabilities\": { \"ips\": true },
+       \"master\": \"ens224\",
+       \"ipam\": {
+         \"type\": \"static\"
+       }
+     }"
+   }
+ }
+]'
+
