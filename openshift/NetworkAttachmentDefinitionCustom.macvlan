@@ -8,5 +8,3 @@ spec:
       ipamConfig:
         type: static
         staticIPAMConfig:
-          addresses:
-          - address: 10.0.202.0/24
