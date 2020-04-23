@@ -21,7 +21,7 @@ spec:
       containers:
       - name: hss
         image: quay.io/canaan/oai-hss:develop-vco3
-        #image: image-registry.openshift-image-registry.svc:5000/oai/oai-hss:develop-vco3
+#        image: image-registry.openshift-image-registry.svc:5000/oai/oai-hss:develop-vco3
         imagePullPolicy: Always
         #command: ['sh', '-c', 'sleep infinity']
         ports:
@@ -104,17 +104,17 @@ spec:
                   values:
                   - worker
                 #- worker-rt1
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: node-role.kubernetes.io/worker
-              #- key: kubernetes.io/hostname
-                operator: In
-                values:
-                - worker
-                #- worker-rt1
+#      affinity:
+#        nodeAffinity:
+#          requiredDuringSchedulingIgnoredDuringExecution:
+#            nodeSelectorTerms:
+#            - matchExpressions:
+#              - key: node-role.kubernetes.io/worker
+#              #- key: kubernetes.io/hostname
+#                operator: In
+#                values:
+#                - worker
+#                #- worker-rt1
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler

@@ -36,15 +36,15 @@ spec:
       containers:
       - name: enb
         image: quay.io/canaan/oai-enb:1.1.1.el8
-        #image: image-registry.openshift-image-registry.svc:5000/oai/oai-enb
+#        image: image-registry.openshift-image-registry.svc:5000/oai/oai-enb
         #command: ['sh', '-c', 'sleep 6000']
-        resources:
-          limits:
-            cpu: 6 
-            memory: 16000Mi
-          requests:
-            cpu: 6 
-            memory: 16000Mi
+#        resources:
+#          limits:
+#            cpu: 2 
+#            memory: 1600Mi
+#          requests:
+#            cpu: 2 
+#            memory: 1600Mi
         imagePullPolicy: Always
         securityContext:
           privileged: true
@@ -148,17 +148,17 @@ spec:
         command:
           - /bin/sleep
           - infinity
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: node-role.kubernetes.io/worker
-              #- key: kubernetes.io/hostname
-                operator: In
-                values:
-                - worker-rt
-                #- worker-rt1
+      #affinity:
+      #  nodeAffinity:
+      #    requiredDuringSchedulingIgnoredDuringExecution:
+      #      nodeSelectorTerms:
+      #      - matchExpressions:
+      #        - key: node-role.kubernetes.io/worker
+      #        #- key: kubernetes.io/hostname
+      #          operator: In
+      #          values:
+      #          - worker-rt
+      #          #- worker-rt1
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
