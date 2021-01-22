@@ -1,0 +1,4 @@
+./daemonset.sh --image=docker.io/ovnkube/ovn-daemonset-u:latest \
+    --net-cidr=10.244.0.0/16 --svc-cidr=172.16.130.0/24 \
+    --gateway-mode="local" \
+    --k8s-apiserver=https://172.16.61.11:6443
