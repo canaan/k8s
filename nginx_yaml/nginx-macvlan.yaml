@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-macvlann
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: nginx-macvlan
+  template:
+    metadata:
+      labels:
+        app: nginx-macvlan
+    spec:
+      containers:
+      - name: nginx-macvlan
+        image: nginx:1.16.1
+        ports:
+        - name: http
+          containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-macvlan
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx-macvlan
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-macvlan 
+  labels:
+    app: multus-macvlan
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+    {
+      "name": "network-macvlan",
+      "ips": [ "10.0.202.100/24" ]
+    }
+    ]'
+spec:
+  containers:
+  - name: centos-tools
+    image: docker.io/centos/tools:latest
+    command:
+    - /sbin/init
+    securityContext:
+      privileged: true
+  nodeSelector:
+    kubernetes.io/hostname: worker-0

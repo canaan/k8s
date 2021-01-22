@@ -1,0 +1,10 @@
+# refer https://rheb.hatenablog.com/entry/multus_openshift43_ipi_aws 
+spec:
+  additionalNetworks: 
+  - name: network-macvlan
+    type: SimpleMacvlan
+    simpleMacvlanConfig:
+      master: ens224
+      ipamConfig:
+        type: static
+        staticIPAMConfig:

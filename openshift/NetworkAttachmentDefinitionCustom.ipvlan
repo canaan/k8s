@@ -1,0 +1,15 @@
+# refer https://rheb.hatenablog.com/entry/multus_openshift43_ipi_aws 
+spec:
+  additionalNetworks:
+  - name: network-ipvlan
+    type: Raw
+    rawCNIConfig: '{
+      "cniVersion": "0.3.1",
+      "type": "ipvlan",
+      "mode": "l2",
+      "capabilities": {"ips": true},
+      "master": "ens224",
+      "ipam": {
+        "type": "static"
+      }
+    }'
