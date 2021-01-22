@@ -28,14 +28,19 @@ spec:
         runAsUser: 0
         runAsGroup: 0
         privileged: true
-        sysctls:
+#        sysctls:
+#        - name: net.core.rmem_default
+#          value: "2000000000"
 #        - name: net.core.rmem_max
-#          value: "212992"
+#          value: "2000000000"
+#        - name: net.core.wmem_default
+#          value: "2000000000"
 #        - name: net.core.wmem_max
-#          value: "212992"
+#          value: "2000000000"
       containers:
       - name: enb
-        image: quay.io/canaan/oai-enb:1.1.1.el8
+        image: quay.io/canaan/oai-enb:1.1.1.el7
+        #image: quay.io/canaan/oai-enb:1.1.1.el8
         #image: image-registry.openshift-image-registry.svc:5000/oai/oai-enb
         #command: ['sh', '-c', 'sleep 6000']
         resources:

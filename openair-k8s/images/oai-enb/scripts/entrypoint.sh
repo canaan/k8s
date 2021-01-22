@@ -3,7 +3,8 @@
 set -eo pipefail # don't set 'u' as we need to explicityly test for undefined vars
 
 CONFIG_DIR="/opt/oai-enb/etc"
-DEFAULT_MODE="RCC_BAND38"
+DEFAULT_MODE="RCC_BAND38_IF5"
+#DEFAULT_MODE="RCC_BAND38"
 MNC_LENGTH=${MNC_LENGTH:-${#MNC}}
 
 # look up configuration template to use
