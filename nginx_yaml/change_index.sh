@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# change_index.sh <metadata name> 
+
 APPNAME=$1
 kubectl get pods -l app=$APPNAME -o jsonpath='{.items[*].metadata.name}'> ./PODNAME
 

@@ -7,14 +7,14 @@ spec:
   config: '{ 
       "cniVersion": "0.3.0",
       "type": "macvlan",
-      "master": "ens224",
+      "master": "ens224.204",
       "mode": "bridge",
       "ipam": {
         "type": "static",
         "addresses": [
                 {
                         "address": "192.168.3.100/24",
-                        "gateway": "192.168.1.1"
+                        "gateway": "192.168.3.101"
                 }
         ]
       }
@@ -28,14 +28,14 @@ spec:
   config: '{ 
       "cniVersion": "0.3.0",
       "type": "macvlan",
-      "master": "ens224",
+      "master": "ens224.203",
       "mode": "bridge",
       "ipam": {
         "type": "static",
         "addresses": [
                 {
                         "address": "192.168.1.100/24",
-                        "gateway": "192.168.1.1"
+                        "gateway": "192.168.1.101"
                 }
         ]
       }

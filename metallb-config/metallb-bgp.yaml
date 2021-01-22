@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    peers:
+    - my-asn: 64522
+      router-id: 1.1.1.1
+      peer-asn: 64520
+      peer-address: 10.0.51.3
+    address-pools:
+    - name: my-ip-space
+      protocol: bgp
+      addresses:
+      - 192.168.254.0/24
+      avoid-buggy-ips: true
