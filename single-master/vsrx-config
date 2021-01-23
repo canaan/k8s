@@ -1,10 +1,6 @@
 tamalab@vSRX1# run show configuration | display set
 set version 20.3R1.8
 set system host-name vSRX1
-set system root-authentication encrypted-password "$6$ZOp8IUqY$UX8iwKvMXXEITrt5XfgZifv2erY4fNKIf3cq2vhgdofEmmoki7T0GqaS69m8P80TTFVnHlZRVo0Ux/z606V8W0"
-set system login user tamalab uid 2000
-set system login user tamalab class super-user
-set system login user tamalab authentication encrypted-password "$6$eZRN0wvF$XM20TvVVubZfcVv91qz2ptnHFmet4fRuNNKzwMnO2BlaeNtL7qQwGs8p9gxRJ/a/jS7ODQj/WRBBxOXZHUxwk1"
 set system services ssh
 set system services telnet
 set system services netconf ssh
