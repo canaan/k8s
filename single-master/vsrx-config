@@ -1,0 +1,108 @@
+tamalab@vSRX1# run show configuration | display set
+set version 20.3R1.8
+set system host-name vSRX1
+set system root-authentication encrypted-password "$6$ZOp8IUqY$UX8iwKvMXXEITrt5XfgZifv2erY4fNKIf3cq2vhgdofEmmoki7T0GqaS69m8P80TTFVnHlZRVo0Ux/z606V8W0"
+set system login user tamalab uid 2000
+set system login user tamalab class super-user
+set system login user tamalab authentication encrypted-password "$6$eZRN0wvF$XM20TvVVubZfcVv91qz2ptnHFmet4fRuNNKzwMnO2BlaeNtL7qQwGs8p9gxRJ/a/jS7ODQj/WRBBxOXZHUxwk1"
+set system services ssh
+set system services telnet
+set system services netconf ssh
+set system services web-management https system-generated-certificate
+set system time-zone Japan
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set security forwarding-options family mpls mode packet-based
+set interfaces ge-0/0/0 unit 0 description to-calico
+set interfaces ge-0/0/0 unit 0 family inet filter input MGMT_ACL
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.51.2/16
+set interfaces ge-0/0/1 unit 0 description to-metallb
+set interfaces ge-0/0/1 unit 0 family inet filter input MGMT_ACL
+set interfaces ge-0/0/1 unit 0 family inet address 10.0.51.3/16
+set interfaces ge-0/0/2 unit 0 description to-TEST-SEGMENT
+set interfaces ge-0/0/2 unit 0 family inet filter input MGMT_ACL
+set interfaces ge-0/0/2 unit 0 family inet address 172.19.0.2/24
+set interfaces fxp0 unit 0 family inet address 192.168.50.12/16
+set policy-options prefix-list LOCAL 172.19.0.0/24
+set policy-options prefix-list OOL 192.168.31.0/24
+set policy-options policy-statement TEST-SEG term 1 from prefix-list LOCAL
+set policy-options policy-statement TEST-SEG term 1 from prefix-list OOL
+set policy-options policy-statement TEST-SEG term 1 then community add calico
+set policy-options policy-statement TEST-SEG term 1 then accept
+set policy-options policy-statement TEST-SEG term 2 then reject
+set policy-options policy-statement calico-in term 1 from community calico
+set policy-options policy-statement calico-in term 1 then accept
+set policy-options policy-statement calico-in term 2 then reject
+set policy-options policy-statement metallb-in term 1 from community metallb
+set policy-options policy-statement metallb-in term 1 then accept
+set policy-options policy-statement metallb-in term 2 then reject
+set policy-options community calico members target:64520:1
+set policy-options community metallb members target:64520:2
+set firewall family inet filter MGMT_ACL term TERMINAL_ACCESS from source-address 192.168.0.0/16
+set firewall family inet filter MGMT_ACL term TERMINAL_ACCESS from port telnet
+set firewall family inet filter MGMT_ACL term TERMINAL_ACCESS from port ssh
+set firewall family inet filter MGMT_ACL term TERMINAL_ACCESS from interface fxp0
+set firewall family inet filter MGMT_ACL term TERMINAL_ACCESS then accept
+set firewall family inet filter MGMT_ACL term TERMINAL_DENY from protocol tcp
+set firewall family inet filter MGMT_ACL term TERMINAL_DENY from port telnet
+set firewall family inet filter MGMT_ACL term TERMINAL_DENY from port ssh
+set firewall family inet filter MGMT_ACL term TERMINAL_DENY then log
+set firewall family inet filter MGMT_ACL term TERMINAL_DENY then reject
+set firewall family inet filter MGMT_ACL term DEFAULT_TERM then accept
+set routing-instances calico routing-options static route 192.168.31.0/24 next-hop 172.19.0.3
+set routing-instances calico routing-options auto-export
+set routing-instances calico protocols bgp group calico type external
+set routing-instances calico protocols bgp group calico allow 10.0.40.101/32
+set routing-instances calico protocols bgp group calico allow 10.0.40.201/32
+set routing-instances calico protocols bgp group calico allow 10.0.40.202/32
+set routing-instances calico protocols bgp group calico allow 10.0.40.203/32
+set routing-instances calico protocols bgp group calico allow 10.0.40.204/32
+set routing-instances calico protocols bgp group calico allow 192.168.254.0/24
+set routing-instances calico protocols bgp group calico allow 172.19.0.0/24
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.101 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.101 peer-as 64521
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.201 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.201 peer-as 64521
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.202 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.202 peer-as 64521
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.203 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.203 peer-as 64521
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.204 multihop
+set routing-instances calico protocols bgp group calico neighbor 10.0.40.204 peer-as 64521
+set routing-instances calico protocols bgp export TEST-SEG
+set routing-instances calico protocols bgp peer-as 64521
+set routing-instances calico protocols bgp local-as 64520
+set routing-instances calico interface ge-0/0/0.0
+set routing-instances calico interface ge-0/0/2.0
+set routing-instances calico instance-type vrf
+set routing-instances calico route-distinguisher 64520:1
+set routing-instances calico vrf-import metallb-in
+set routing-instances calico vrf-target target:64520:1
+set routing-instances metallb routing-options auto-export
+set routing-instances metallb protocols bgp group metallb type external
+set routing-instances metallb protocols bgp group metallb local-as 64520
+set routing-instances metallb protocols bgp group metallb allow 10.0.40.101/32
+set routing-instances metallb protocols bgp group metallb allow 10.0.40.201/32
+set routing-instances metallb protocols bgp group metallb allow 10.0.40.202/32
+set routing-instances metallb protocols bgp group metallb allow 10.0.40.203/32
+set routing-instances metallb protocols bgp group metallb allow 10.0.40.204/32
+set routing-instances metallb protocols bgp group metallb allow 192.168.254.0/24
+set routing-instances metallb protocols bgp group metallb allow 172.19.0.0/24
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.101 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.101 peer-as 64522
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.201 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.201 peer-as 64522
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.202 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.202 peer-as 64522
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.203 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.203 peer-as 64522
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.204 multihop
+set routing-instances metallb protocols bgp group metallb neighbor 10.0.40.204 peer-as 64522
+set routing-instances metallb protocols bgp peer-as 64522
+set routing-instances metallb protocols bgp local-as 64520
+set routing-instances metallb interface ge-0/0/1.0
+set routing-instances metallb instance-type vrf
+set routing-instances metallb route-distinguisher 64520:2
+set routing-instances metallb vrf-target target:64520:2
