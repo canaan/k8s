@@ -11,6 +11,6 @@ done
 
 for i in "${K8SWORKER[@]}";
 do
-	ssh $i sudo kubeadm join 172.16.254.2:6443 --token ql6v5t.putyqo9rawqm5exc \
-	--discovery-token-ca-cert-hash sha256:2c6378f365e071710b080eca0d489cdc61513a3e7fd424ed42724713e85eae4c
+	ssh $i sudo kubeadm join 172.16.254.2:6443 --token ${TOKEN} \
+	--discovery-token-ca-cert-hash sha256:${SHA256}
 done
