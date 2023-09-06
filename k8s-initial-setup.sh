@@ -8,6 +8,8 @@ sudo sysctl -p
 sudo setenforce 0
 sudo sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
 sudo swapoff -a
+# vi /etc/fstab のswap の行をコメントアウト
+# example: /dev/mapper/cl-swap swap swap defaults 0 0　
 sudo lsmod | grep br_netfilter
 sudo modprobe br_netfilter
 sudo lsmod | grep br_netfilter
