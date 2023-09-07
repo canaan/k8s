@@ -1,6 +1,6 @@
 #!/bin/sh
 
-K8SNODE=("172.16.254.11" "172.16.254.12" "172.16.254.13" "172.16.254.21" "172.16.254.22" "172.16.254.23")
+K8SNODE=("172.16.254.32" "172.16.254.33" "172.16.254.41" "172.16.254.42" "172.16.254.43")
 
 for i in "${K8SNODE[@]}";
 do
@@ -12,7 +12,7 @@ for i in "${K8SNODE[@]}";
 do
 for HOST in "kubectl get node $i -o=jsonpath='{.status.addresses[1].address}'";
 do
-	ssh $HOST "sudo kubeadm init --pod-network-cidr=10.244.0.0/16  --upload-certs --control-plane-endpoint=172.16.254.1:6443"
+	ssh $HOST "sudo kubeadm init --pod-network-cidr=10.244.0.0/16  --upload-certs --control-plane-endpoint=172.16.254.3:6443"
 	sleep 120 
 	ssh $HOST "mkdir $HOME/.kube/"
 	sleep 3
