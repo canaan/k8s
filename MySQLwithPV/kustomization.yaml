@@ -1,0 +1,10 @@
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=n00dles
+resources:
+  - pv0001.yaml
+  - pv0002.yaml
+  - mysql-deployment.yaml
+#  - wordpress-deployment.yaml
+  - wordpress-deployment-nodeport.yaml

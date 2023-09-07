@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: zookeeper-2 
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: zookeeper-storageclass 
+  nfs:
+    server: 172.16.254.1
+    path: /mnt/share/nfs/zookeeper-2
