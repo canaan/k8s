@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: centos 
+spec:
+  containers:
+  - name: centos7
+    image: centos:7
+    command:
+    - "/sbin/init"
