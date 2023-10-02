@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onic-ubuntu
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: onic-ubuntu
+  template:
+    metadata:
+      labels:
+        app: onic-ubuntu
+    spec:
+      containers:
+        - name: onic-ubuntu-container
+          image: ubuntu:latest
+          command: ["/bin/sleep", "infinity"]

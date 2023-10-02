@@ -4,6 +4,7 @@ metadata:
   name: ubuntu-netadmin
   labels:
     name: ubuntu
+    sidecar.istio.io/inject: "false"
 spec:
   containers:
     - name: ubuntu
