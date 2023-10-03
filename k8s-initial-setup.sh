@@ -39,6 +39,6 @@ EOF
 
 sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
-sudo echo "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd" >> /etc/sysconfig/kubelet
+#sudo echo "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd" >> /etc/sysconfig/kubelet
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
