@@ -1,9 +1,17 @@
 apiVersion: v1
 kind: Pod
 metadata:
+<<<<<<< HEAD
   name: test-image 
 spec:
   containers:
   - name: test-image
     image: k8s-gw-stream:5000/test/test_image
+=======
+  name: test-image
+spec:
+  containers:
+  - name: test-image
+    image: k8s-gw-stream:5000/test/test_image:latest
+>>>>>>> 53c8012296d8cc25a4d76962e76b8b9073f46cbc
     command: ["/bin/sleep", "3650d"]

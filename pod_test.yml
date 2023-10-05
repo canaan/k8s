@@ -1,0 +1,25 @@
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-4.6.1
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2023-10-04T13:01:00Z"
+  labels:
+    app: podtest
+  name: podtest
+spec:
+  containers:
+  - args:
+    - /usr/bin/run-httpd
+    image: k8s-gw-stream:5000/pod-test/httpd8443:latest
+    name: httpd-in-pod8443
+    ports:
+    - containerPort: 8443
+      hostPort: 8080
+    - containerPort: 9443
+      hostPort: 9090
+    securityContext:
+      runAsNonRoot: true
+    tty: true
