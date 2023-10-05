@@ -4,5 +4,6 @@ metadata:
   name: grpc-server 
 spec:
   containers:
-    - name: grpc-server 
-      image: k8s-gw-stream.local:5000/grpc/grpc-server-base:latest 
+  - name: grpc-server-base
+    image: k8s-gw-stream:5000/grpc/grpc-server-base 
+    command: ["/bin/sleep", "3650d"]

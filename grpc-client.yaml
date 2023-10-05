@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: centos9-stream 
+  name: grpc-client 
 spec:
   containers:
   - name: centos9-stream
