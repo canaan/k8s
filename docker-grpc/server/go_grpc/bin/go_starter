@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set  pipefail
+#set -euo pipefail
+
+function exits() {
+  local cwd="$1"
+  local File="${cwd}/go.mod"
+  local c_dir=${cwd##*/}
+
+  if [ -f "${File}" ]; then
+    echo "${File} exist"
+  else
+#    cd "${c_dir}"
+    echo "=== c_dir is $c_dir ==="
+    go mod init go_grpc 
+#    go mod init "${c_dir}"
+  fi
+}
+
+function main() {
+  local cwd
+  cwd="$(cd "$(dirname "$0")/.." && pwd)"
+  echo "=== cwd is $cwd ==="
+  exits "${cwd}"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi
+
