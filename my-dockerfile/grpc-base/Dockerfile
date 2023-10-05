@@ -3,7 +3,7 @@ FROM golang:1.21
 ENV PROTOBUF_VERSION 3.20.3
 
 RUN apt-get update \
-    && apt-get install -y wget net-tools bind9-utils protobuf-compiler unzip --no-install-recommends \
+    && apt-get install -y iproute2 wget dnsutils protobuf-compiler unzip --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
