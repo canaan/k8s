@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nginxconfigmap-volume 
+  name: pvc-nginxconfig
   labels:
-    app: nginx
+    run: my-nginx-secure
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi

@@ -3,19 +3,19 @@ kind: Service
 metadata:
   name: my-nginx-secure
   labels:
-    run: my-nginx
+    run: my-nginx-secure
 spec:
   type: NodePort
   ports:
-  - port: 8888
-    targetPort: 80
+  - port: 80
+#    targetPort: 80
     protocol: TCP
     name: http
   - port: 443
     protocol: TCP
     name: https
   selector:
-    run: my-nginx
+    run: my-nginx-secure
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -41,13 +41,21 @@ spec:
         configMap:
           name: nginxconfigmap
       containers:
-      - name: nginxhttps
-        image: bprashanth/nginxhttps:1.0
+      - name: nginx
+        image: nginx:latest 
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 443
         - containerPort: 80
         volumeMounts:
-        - mountPath: /etc/nginx/ssl
-          name: secret-volume
         - mountPath: /etc/nginx/conf.d
-          name: configmap-volume
+          name: nginxconfig-volume
+        - mountPath: /etc/nginx/ssl
+          name: nginxsecret-volume
+      volumes:
+      - name: nginxconfig-volume
+        persistentVolumeClaim:
+          claimName: pvc-nginxconfig
+      - name: nginxsecret-volume
+        persistentVolumeClaim:
+          claimName: pvc-nginxsecret

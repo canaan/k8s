@@ -1,14 +1,16 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: nginxconfigmap-volume 
+  name: pv-nginxconfig
+  labels:
+    run: my-nginx-secure
 spec:
   capacity:
     storage: 1Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: slow
   nfs:
     server: 172.16.254.1
-    path: /mnt/share/nfs/nginxconfigmap-volume
+    path: /mnt/share/nfs/pv-nginxconfig
